@@ -1,16 +1,16 @@
 function replaceTextOnPage(from, to){
   getAllTextNodes().forEach(function(node){
-    node.nodeValue = node.nodeValue.replace(new RegExp(quote(from), 'g'), to);
+    node.nodeValue = node.nodeValue.replace(new RegExp('(\\W)?' + quote(from) + '(\\W)?', 'g'), '$1' + to + '$2');
   });
 
   function getAllTextNodes(){
     var result = [];
 
     (function scanSubTree(node){
-      if(node.childNodes.length) 
-        for(var i = 0; i < node.childNodes.length; i++) 
+      if(node.childNodes.length)
+        for(var i = 0; i < node.childNodes.length; i++)
           scanSubTree(node.childNodes[i]);
-      else if(node.nodeType == Node.TEXT_NODE) 
+      else if(node.nodeType == Node.TEXT_NODE)
         result.push(node);
     })(document);
 
